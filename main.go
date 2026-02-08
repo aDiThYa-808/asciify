@@ -15,7 +15,7 @@ func main() {
 	bounds := img.Bounds()
 
 	imageWidth := bounds.Dx()
-	scaleX := imageWidth / 120
+	scaleX := imageWidth / 180
 	scaleY := scaleX * 2
 
 	for y := bounds.Min.Y; y < bounds.Max.Y; y += scaleY {
@@ -29,9 +29,9 @@ func main() {
 				b := float64(b16 >> 8)
 
 				brightness := (r + g + b) / 3.0
-
 				index := int((brightness / 255.0) * float64(len(asciiChars)-1))
-				fmt.Print(string(asciiChars[index]))
+				color := fmt.Sprintf("\x1B[38;2;%v;%v;%vm", r, g, b)
+				fmt.Print(color + string(asciiChars[index]) + "\x1B[0m")
 			}
 		}
 		fmt.Println()
